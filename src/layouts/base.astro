@@ -12,9 +12,9 @@ const { channel } = Astro.props
 const locale = getEnv(import.meta.env, Astro, 'LOCALE')
 
 const seo = channel?.seo
-const canonical = SITE_URL.startsWith('http')
-  ? new URL(SITE_URL).origin + Astro.url.pathname
-  : Astro.url.origin + Astro.url.pathname
+const reqPathname = Astro.url.pathname.replace(/\/$/, '')
+const canonical = SITE_URL.startsWith('http') ? new URL(SITE_URL).origin + reqPathname : Astro.url.origin + reqPathname
+
 const { origin, pathname } = new URL(canonical)
 const twitter = getEnv(import.meta.env, Astro, 'TWITTER')
 
@@ -22,8 +22,8 @@ const seoParams = {
   title: seo?.title,
   description: seo?.text ?? channel?.description,
   canonical,
-  noindex: getEnv(import.meta.env, Astro, 'NOINDEX'),
-  nofollow: getEnv(import.meta.env, Astro, 'NOFOLLOW'),
+  noindex: seo?.noindex ?? getEnv(import.meta.env, Astro, 'NOINDEX'),
+  nofollow: seo?.nofollow ?? getEnv(import.meta.env, Astro, 'NOFOLLOW'),
   openGraph: {
     basic: {
       type: 'website',
@@ -33,11 +33,18 @@ const seoParams = {
     },
     optional: {
       description: seo?.text ?? channel?.description,
-      locale: getEnv(import.meta.env, Astro, 'LOCALE'),
+      locale,
     },
   },
   extend: {
-    link: [{ rel: 'icon', href: channel?.avatar ? channel?.avatar : '/favicon.svg' }],
+    link: [
+      {
+        rel: 'icon',
+        href: channel?.avatar
+          ? `https://wsrv.nl/?w=64&h=64&fit=cover&mask=circle&url=ssl:${channel?.avatar?.replace(/^https?:\/\//, '')}`
+          : '/favicon.svg',
+      },
+    ],
   },
 }
 

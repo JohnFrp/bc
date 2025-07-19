@@ -47,6 +47,7 @@
 - [ChatGPT/AI新闻聚合](https://g4f.icu/)
 - [Abner's memos](https://memos.abnerz6.top/)
 - [小众软件的发现](https://talk.appinn.net/)
+- [小报童优惠与排行榜](https://youhui.xiaobaoto.com/)
 
 ### 平台
 
@@ -130,6 +131,9 @@ LINKS=Title1,URL1;Title2,URL3;Title3,URL3;
 
 ## 侧边栏导航项, 使用英文逗号和分号分割
 NAVS=Title1,URL1;Title2,URL3;Title3,URL3;
+
+## 启用 RSS 美化
+RSS_BEAUTIFY=true
 ```
 
 ## 🙋🏻 常问问题
@@ -144,5 +148,5 @@ NAVS=Title1,URL1;Title2,URL3;Title3,URL3;
 ## ☕ 赞助
 
 1. [在 Telegram 关注我](https://t.me/miantiao_me)
-2. [在 𝕏 上关注我](https://x.com/ccbikai)
+2. [在 𝕏 上关注我](https://404.li/x)
 3. [在 GitHub 赞助我](https://github.com/sponsors/ccbikai)

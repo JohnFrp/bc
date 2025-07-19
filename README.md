@@ -47,6 +47,7 @@ English | [简体中文](./README.zh-cn.md)
 - [ChatGPT/AI新闻聚合](https://g4f.icu/)
 - [Abner's memos](https://memos.abnerz6.top/)
 - [Appinn Talk](https://talk.appinn.net/)
+- [小报童优惠与排行榜](https://youhui.xiaobaoto.com/)
 
 ### Platform
 
@@ -132,6 +133,9 @@ LINKS=Title1,URL1;Title2,URL3;Title3,URL3;
 
 ## Sidebar Navigation Item, Separate using commas and semicolons
 NAVS=Title1,URL1;Title2,URL3;Title3,URL3;
+
+## Enable RSS beautify
+RSS_BEAUTIFY=true
 ```
 
 ## 🙋🏻 FAQs
@@ -146,5 +150,5 @@ NAVS=Title1,URL1;Title2,URL3;Title3,URL3;
 ## ☕ Sponsor
 
 1. [Follow me on Telegram](https://t.me/miantiao_me)
-2. [Follow me on 𝕏](https://x.com/0xKaiBi)
+2. [Follow me on 𝕏](https://404.li/kai)
 3. [Sponsor me on GitHub](https://github.com/sponsors/ccbikai)
