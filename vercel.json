@@ -5,7 +5,15 @@
   ],
   "functions": {
     "api/**/*.js": {
-      "runtime": "nodejs20.x"
+      "runtime": "nodejs20.x",
+      "memory": 3008,
+      "maxDuration": 10
     }
-  }
+  },
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build"
+    }
+  ]
 }
