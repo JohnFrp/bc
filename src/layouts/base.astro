@@ -51,7 +51,31 @@ const seoParams = {
 const GOOGLE_SEARCH_SITE = getEnv(import.meta.env, Astro, 'GOOGLE_SEARCH_SITE')
 const searchAction = GOOGLE_SEARCH_SITE ? 'https://www.google.com/search' : '/search/result'
 
-const HEADER_INJECT = getEnv(import.meta.env, Astro, 'HEADER_INJECT')
+const HEADER_INJECT = getEnv(import.meta.env, Astro, '<style>
+  .announcement-bar {
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    color: white;
+    padding: 12px 0;
+    text-align: center;
+    font-weight: 500;
+    position: relative;
+  }
+  .announcement-bar a {
+    color: white;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+  .announcement-bar .close {
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+  }
+</style>
+<div class="announcement-bar">
+  🎉 Special offer! <a href="/promo">Get 30% off</a> today only
+  <span class="close" onclick="this.parentElement.remove()">×</span>
+</div>
+`;')
 const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
 const TAGS = getEnv(import.meta.env, Astro, 'TAGS')
 const LINKS = getEnv(import.meta.env, Astro, 'LINKS')
@@ -88,33 +112,7 @@ const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
       }}
       {...seoParams}
     />
-    <Fragment set:html={
-<style>
-  .announcement-bar {
-    background: linear-gradient(90deg, #ff8a00, #e52e71);
-    color: white;
-    padding: 12px 0;
-    text-align: center;
-    font-weight: 500;
-    position: relative;
-  }
-  .announcement-bar a {
-    color: white;
-    text-decoration: underline;
-    font-weight: 600;
-  }
-  .announcement-bar .close {
-    position: absolute;
-    right: 20px;
-    cursor: pointer;
-  }
-</style>
-<div class="announcement-bar">
-  🎉 Special offer! <a href="/promo">Get 30% off</a> today only
-  <span class="close" onclick="this.parentElement.remove()">×</span>
-</div>
-`;
-} />
+    <Fragment set:html={HEADER_INJECT} />
   </head>
 
   <body>
