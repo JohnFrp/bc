@@ -7,7 +7,6 @@ import { getChannelInfo } from '../../lib/telegram'
 const { SITE_URL } = Astro.locals
 
 const channelInfo = await getChannelInfo(Astro)
-
 const post = await getChannelInfo(Astro, {
   type: 'post',
   id: Astro.params.id,
@@ -22,6 +21,75 @@ const channel = {
 const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
 ---
 
+<style is:global>
+  /* Main Layout Styles */
+  .post-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    color: var(--text-color);
+  }
+
+  /* Breadcrumb Header */
+  #breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .breadcrumb-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent-color);
+  }
+
+  .breadcrumb-title {
+    flex: 1;
+  }
+
+  .site-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--heading-color);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .site-title:hover {
+    color: var(--accent-color);
+  }
+
+  /* Post Content Styles */
+  .post-content {
+    line-height: 1.6;
+    font-size: 1.1rem;
+  }
+
+  .post-meta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    color: var(--muted-text);
+    font-size: 0.9rem;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .post-container {
+      padding: 1rem;
+    }
+    
+    #breadcrumb {
+      margin-bottom: 1.5rem;
+    }
+  }
+</style>
+
 <List channel={channel} before={false} after={false} isItem={true}>
   <div slot="header" id="breadcrumb">
     <img
@@ -29,11 +97,46 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
       alt={channel?.title}
       loading="eager"
       class="breadcrumb-avatar"
+      width="48"
+      height="48"
     />
     <div class="breadcrumb-title">
       <a href={SITE_URL} class="site-title" title={channel?.title}>
         {channel.title}
       </a>
+      {post?.date && 
+        <div class="post-meta">
+          <span>{new Date(post.date).toLocaleDateString()}</span>
+          {post?.views && <span>{post.views} views</span>}
+        </div>
+      }
     </div>
   </div>
+
+  <!-- Enhanced Post Content Section -->
+  <article slot="content" class="post-content">
+    {post?.text && (
+      <Fragment set:html={post.text.replace(/\n/g, '<br />')} />
+    )}
+    
+    {post?.media && (
+      <div class="post-media">
+        <!-- Handle different media types -->
+        {post.media.map(media => (
+          media.type === 'image' ? (
+            <img 
+              src={staticProxy + media.url} 
+              alt={media.caption || ''}
+              loading="lazy"
+              class="post-image"
+            />
+          ) : media.type === 'video' ? (
+            <video controls class="post-video">
+              <source src={staticProxy + media.url} type={media.mimeType} />
+            </video>
+          ) : null
+        ))}
+      </div>
+    )}
+  </article>
 </List>
